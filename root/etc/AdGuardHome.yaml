@@ -23,8 +23,11 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
+    - tls://dns.alidns.com
     - https://dns.alidns.com/dns-query
     - https://223.5.5.5/dns-query
+    - https://dns.cloudflare.com/dns-query
+    - 2400:3200::1
   upstream_dns_file: ""
   bootstrap_dns:
     - 223.5.5.5
@@ -92,13 +95,13 @@ querylog:
   ignored: []
   interval: 720h
   size_memory: 1000
-  enabled: false
+  enabled: true
   file_enabled: true
 statistics:
   dir_path: ""
   ignored: []
-  interval: 168h
-  enabled: false
+  interval: 720h
+  enabled: true
 filters:
   - enabled: true
     url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt
@@ -159,7 +162,7 @@ filtering:
   safesearch_cache_size: 1048576
   parental_cache_size: 1048576
   cache_time: 30
-  filters_update_interval: 24
+  filters_update_interval: 168
   blocked_response_ttl: 10
   filtering_enabled: true
   parental_enabled: false
