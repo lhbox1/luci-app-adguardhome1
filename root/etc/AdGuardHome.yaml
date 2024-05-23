@@ -1,31 +1,39 @@
 http:
-  pprof:
-    port: 6060
-    enabled: false
   address: 0.0.0.0:3000
   session_ttl: 720h
 users:
   - name: admin
-    password: $2a$10$3cb7mGGDHCBwlcUL5kaTWeCA0Rpn032fCZOEK.5JW17UW1teX3VNa
+    password: $2a$10$HLQX/Ura.Jj4vzQzWiNhG.qPQK97.jGnue3Y.QOFg/VaXb2d3/IL.
 auth_attempts: 5
 block_auth_min: 15
 http_proxy: ""
-language: ""
+language: zh-cn
 theme: auto
+debug_pprof: false
 dns:
   bind_hosts:
     - 0.0.0.0
   port: 5336
   anonymize_client_ip: false
-  ratelimit: 20
-  ratelimit_subnet_len_ipv4: 24
-  ratelimit_subnet_len_ipv6: 56
+  protection_enabled: true
+  blocking_mode: default
+  blocking_ipv4: ""
+  blocking_ipv6: ""
+  blocked_response_ttl: 60
+  protection_disabled_until: null
+  parental_block_host: family-block.dns.adguard.com
+  safebrowsing_block_host: standard-block.dns.adguard.com
+  ratelimit: 0
   ratelimit_whitelist: []
-  refuse_any: true
+  refuse_any: false
   upstream_dns:
-    - tls://dns.alidns.com
     - https://dns.alidns.com/dns-query
+    - tls://dns.alidns.com
     - https://223.5.5.5/dns-query
+    - https://120.53.53.53/dns-query
+    - https://1.12.12.12/dns-query
+    - https://doh.pub/dns-query
+    - https://doh.360.cn/dns-query
     - https://dns.cloudflare.com/dns-query
     - 2400:3200::1
   upstream_dns_file: ""
@@ -35,10 +43,8 @@ dns:
     - 114.114.114.114
     - 9.9.9.10
     - 149.112.112.10
-    - 2620:fe::10
-    - 2620:fe::fe:10
-  fallback_dns: []
-  upstream_mode: load_balance
+  all_servers: true
+  fastest_addr: false
   fastest_timeout: 1s
   allowed_clients: []
   disallowed_clients: []
@@ -55,16 +61,37 @@ dns:
   cache_optimistic: true
   bogus_nxdomain: []
   aaaa_disabled: false
-  enable_dnssec: false
+  enable_dnssec: true
   edns_client_subnet:
     custom_ip: ""
-    enabled: false
+    enabled: true
     use_custom: false
   max_goroutines: 300
   handle_ddr: true
   ipset: []
   ipset_file: ""
   bootstrap_prefer_ipv6: false
+  filtering_enabled: true
+  filters_update_interval: 72
+  parental_enabled: false
+  safebrowsing_enabled: false
+  safebrowsing_cache_size: 1048576
+  safesearch_cache_size: 1048576
+  parental_cache_size: 1048576
+  cache_time: 30
+  safe_search:
+    enabled: false
+    bing: true
+    duckduckgo: true
+    google: true
+    pixabay: true
+    yandex: true
+    youtube: true
+  rewrites: []
+  blocked_services:
+    schedule:
+      time_zone: Local
+    ids: []
   upstream_timeout: 10s
   private_networks: []
   use_private_ptr_resolvers: true
@@ -73,15 +100,13 @@ dns:
   dns64_prefixes: []
   serve_http3: false
   use_http3_upstreams: false
-  serve_plain_dns: true
-  hostsfile_enabled: true
 tls:
   enabled: false
   server_name: ""
   force_https: false
   port_https: 443
   port_dns_over_tls: 853
-  port_dns_over_quic: 853
+  port_dns_over_quic: 784
   port_dnscrypt: 0
   dnscrypt_config_file: ""
   allow_unencrypted_doh: false
@@ -91,34 +116,48 @@ tls:
   private_key_path: ""
   strict_sni_check: false
 querylog:
-  dir_path: ""
   ignored: []
-  interval: 720h
+  interval: 6h
   size_memory: 1000
-  enabled: true
+  enabled: false
   file_enabled: true
 statistics:
-  dir_path: ""
   ignored: []
-  interval: 720h
-  enabled: true
+  interval: 24h
+  enabled: false
 filters:
   - enabled: true
-    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt
+    url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
     name: AdGuard DNS filter
-    id: 1
+    id: 1628750870
+  - enabled: false
+    url: https://anti-ad.net/easylist.txt
+    name: 'CHN: anti-AD'
+    id: 1628750871
+  - enabled: false
+    url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt
+    name: AdGuard DNS filter2
+    id: 1628750872
   - enabled: false
     url: https://adguardteam.github.io/HostlistsRegistry/assets/filter_2.txt
     name: AdAway Default Blocklist
-    id: 2
+    id: 1628750873
   - enabled: true
     url: https://easylist-downloads.adblockplus.org/easylistchina.txt
     name: EasyList China
-    id: 1715692508
+    id: 1628750874
   - enabled: true
-    url: https://cdn.jsdelivr.net/gh/privacy-protection-tools/anti-AD@master/anti-ad-easylist.txt
-    name: anti-AD
-    id: 1715692509
+    url: https://fastly.jsdelivr.net/gh/cjx82630/cjxlist/cjx-annoyance.txt
+    name: CJX's Annoyance List
+    id: 1628750875
+  - enabled: false
+    url: https://easylist-downloads.adblockplus.org/easyprivacy.txt
+    name: EasyPrivacy
+    id: 1628750876
+  - enabled: false
+    url: https://easylist-downloads.adblockplus.org/easylist.txt
+    name: EasyList
+    id: 1628750877
 whitelist_filters: []
 user_rules: []
 dhcp:
@@ -138,36 +177,6 @@ dhcp:
     lease_duration: 86400
     ra_slaac_only: false
     ra_allow_slaac: false
-filtering:
-  blocking_ipv4: ""
-  blocking_ipv6: ""
-  blocked_services:
-    schedule:
-      time_zone: Local
-    ids: []
-  protection_disabled_until: null
-  safe_search:
-    enabled: false
-    bing: true
-    duckduckgo: true
-    google: true
-    pixabay: true
-    yandex: true
-    youtube: true
-  blocking_mode: default
-  parental_block_host: family-block.dns.adguard.com
-  safebrowsing_block_host: standard-block.dns.adguard.com
-  rewrites: []
-  safebrowsing_cache_size: 1048576
-  safesearch_cache_size: 1048576
-  parental_cache_size: 1048576
-  cache_time: 30
-  filters_update_interval: 168
-  blocked_response_ttl: 10
-  filtering_enabled: true
-  parental_enabled: false
-  safebrowsing_enabled: false
-  protection_enabled: true
 clients:
   runtime_sources:
     whois: true
@@ -188,4 +197,4 @@ os:
   group: ""
   user: ""
   rlimit_nofile: 0
-schema_version: 28
+schema_version: 24
