@@ -117,14 +117,14 @@ tls:
   strict_sni_check: false
 querylog:
   ignored: []
-  interval: 720h
+  interval: 168h
   size_memory: 1000
   enabled: false
   file_enabled: true
 statistics:
   ignored: []
   interval: 2160h
-  enabled: false
+  enabled: true
 filters:
   - enabled: true
     url: https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt
