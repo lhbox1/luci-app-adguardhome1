@@ -166,6 +166,8 @@ user_rules:
   - '||xiaomor.com^'
   - '||hpplay.cn^'
   - '||cibn.cc^'
+  - '##路由IP'
+  - '192.168.15.1 immortalwrt.lan'
   - '#iptv'
   - 39.136.125.201 cache.ott.ystenlive.itv.cmvideo.cn
   - 39.136.125.201 cache.ott.bestlive.itv.cmvideo.cn
