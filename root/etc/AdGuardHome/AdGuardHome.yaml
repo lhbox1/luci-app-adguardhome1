@@ -23,7 +23,6 @@ dns:
   ratelimit_whitelist: []
   refuse_any: true
   upstream_dns:
-    - '# 127.0.0.1:7874'
     - tls://dns.alidns.com
     - 211.140.13.188
     - 211.140.188.188
@@ -147,6 +146,8 @@ filters:
     id: 1734868821
 whitelist_filters: []
 user_rules:
+  - '||umeng.com^'
+  - '||mt2.cn^'
   - '||launcher.TCLoudfamily.com^'
   - '||update.cedock.com^'
   - '##TCL屏蔽'
