@@ -72,7 +72,7 @@ dns:
   bootstrap_prefer_ipv6: false
   upstream_timeout: 10s
   private_networks: []
-  use_private_ptr_resolvers: true
+  use_private_ptr_resolvers: false
   local_ptr_upstreams: []
   use_dns64: false
   dns64_prefixes: []
@@ -124,7 +124,7 @@ filters:
     url: https://cdn.jsdelivr.net/gh/privacy-protection-tools/anti-AD@master/anti-ad-easylist.txt
     name: anti-AD
     id: 1715692509
-  - enabled: false
+  - enabled: true
     url: https://fastly.jsdelivr.net/gh/cjx82630/cjxlist/cjx-annoyance.txt
     name: CJX's Annoyance List
     id: 1722064774
@@ -136,7 +136,7 @@ filters:
     url: https://cdn.jsdelivr.net/gh/217heidai/adblockfilters@main/rules/adblockdns.txt
     name: 217heidai
     id: 1733850692
-  - enabled: true
+  - enabled: false
     url: https://gh.09888888.xyz/raw.githubusercontent.com/217heidai/adblockfilters/main/rules/adblockdns.txt
     name: 217heidai
     id: 1733850693
@@ -167,7 +167,7 @@ user_rules:
   - '||hpplay.cn^'
   - '||cibn.cc^'
   - '##路由IP'
-  - '192.168.15.1 immortalwrt.lan'
+  - 192.168.15.1 immortalwrt.lan
   - '#iptv'
   - 39.136.125.201 cache.ott.ystenlive.itv.cmvideo.cn
   - 39.136.125.201 cache.ott.bestlive.itv.cmvideo.cn
@@ -197,7 +197,7 @@ filtering:
   blocking_ipv6: ""
   blocked_services:
     schedule:
-      time_zone: Local
+      time_zone: UTC
     ids: []
   protection_disabled_until: null
   safe_search:
@@ -219,7 +219,7 @@ filtering:
   safesearch_cache_size: 1048576
   parental_cache_size: 1048576
   cache_time: 30
-  filters_update_interval: 168
+  filters_update_interval: 72
   blocked_response_ttl: 10
   filtering_enabled: true
   parental_enabled: false
@@ -229,7 +229,7 @@ clients:
   runtime_sources:
     whois: true
     arp: true
-    rdns: true
+    rdns: false
     dhcp: true
     hosts: true
   persistent: []
